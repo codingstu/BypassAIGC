@@ -5,9 +5,10 @@ import {
   ArrowLeft, ArrowRight, FileText, Upload, Play, Download,
   CheckCircle, AlertCircle, Loader2, Settings, Eye, Edit3,
   Save, Trash2, RefreshCw, FileUp, X, ChevronDown, ChevronUp,
-  Hash, Type, List, BookOpen, Quote, Table, Image, Code
+  Hash, Type, List, BookOpen, Quote, Table, Image, Code, Wand2
 } from 'lucide-react';
 import { wordFormatterAPI } from '../api';
+import AppLayout from '../components/AppLayout';
 
 // Paragraph type configuration with icons and colors
 const PARAGRAPH_TYPES = {
@@ -477,38 +478,7 @@ const ArticlePreprocessorPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link
-              to="/spec-generator"
-              className="flex items-center gap-1 text-gray-600 hover:text-gray-900"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">返回规范生成</span>
-            </Link>
-            <div className="h-6 w-px bg-gray-300" />
-            <h1 className="text-lg font-semibold text-gray-900">文章预处理</h1>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {usage && (
-              <div className="text-sm text-gray-600">
-                使用量: {usage.used}/{usage.limit}
-              </div>
-            )}
-            {selectedSpec && (
-              <div className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded text-sm">
-                <CheckCircle className="w-4 h-4" />
-                已选规范: {specName || '自定义'}
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-
+    <AppLayout pageTitle="文章预处理" pageIcon={Wand2} pageDescription="智能段落识别与分类">
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Workflow indicator */}
         <div className="mb-6 flex items-center justify-center gap-2 text-sm text-gray-500">
@@ -836,7 +806,7 @@ const ArticlePreprocessorPage = () => {
           </div>
         </div>
       </main>
-    </div>
+    </AppLayout>
   );
 };
 
