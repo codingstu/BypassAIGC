@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {
-  FileText, History, LogOut, Play,
-  Users, Clock, AlertCircle, CheckCircle, Trash2, Info
+  FileText, History, Play,
+  Users, Clock, AlertCircle, CheckCircle, Trash2, Info, Sparkles
 } from 'lucide-react';
 import { optimizationAPI } from '../api';
+import AppLayout from '../components/AppLayout';
 
 // 会话列表项组件 - 使用 memo 避免不必要重渲染
 const SessionItem = memo(({ session, activeSession, onView, onDelete, onRetry }) => {
@@ -229,11 +230,6 @@ const WorkspacePage = () => {
     }
   }, [text, processingMode, isSubmitting, loadSessions]);
 
-  const handleLogout = useCallback(() => {
-    localStorage.removeItem('cardKey');
-    navigate('/');
-  }, [navigate]);
-
   const handleDeleteSession = useCallback(async (session) => {
     const confirmDelete = window.confirm('确认删除该会话及其结果吗?');
     if (!confirmDelete) {
@@ -285,56 +281,31 @@ const WorkspacePage = () => {
 
 
   return (
-    <div className="min-h-screen bg-ios-background">
-      {/* 顶部导航栏 - iOS Glass Style */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-ios-separator sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-[52px]">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-ios-blue rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-[17px] font-semibold text-black tracking-tight">
-                AI 论文润色增强
-              </h1>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              {/* 队列状态 */}
-              {queueStatus && (
-                <div className="flex items-center gap-3 text-[13px]">
-                  <div className="flex items-center gap-1.5 bg-gray-100 px-2 py-1 rounded-md">
-                    <Users className="w-3.5 h-3.5 text-ios-gray" />
-                    <span className="text-ios-gray font-medium">
-                      {queueStatus.current_users}/{queueStatus.max_users}
-                    </span>
-                  </div>
-                  {queueStatus.queue_length > 0 && (
-                    <div className="flex items-center gap-1.5 bg-orange-50 px-2 py-1 rounded-md">
-                      <Clock className="w-3.5 h-3.5 text-ios-orange" />
-                      <span className="text-ios-orange font-medium">
-                        {queueStatus.queue_length} 排队
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-              
-              <button
-                onClick={handleLogout}
-                className="text-ios-red text-[17px] hover:opacity-70 transition-opacity font-normal"
-              >
-                退出
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <AppLayout
+      pageTitle="AI 润色增强"
+      pageIcon={Sparkles}
+      pageDescription="论文润色与原创性增强"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* 队列状态条 */}
+        {queueStatus && (queueStatus.current_users > 0 || queueStatus.queue_length > 0) && (
+          <div className="mb-4 flex items-center gap-3 text-[13px] p-3 bg-white rounded-xl border border-gray-100 shadow-ios">
+            <div className="flex items-center gap-1.5 text-ios-gray">
+              <Users className="w-3.5 h-3.5" />
+              <span className="font-medium">当前用户: {queueStatus.current_users}/{queueStatus.max_users}</span>
+            </div>
+            {queueStatus.queue_length > 0 && (
+              <div className="flex items-center gap-1.5 text-ios-orange">
+                <Clock className="w-3.5 h-3.5" />
+                <span className="font-medium">{queueStatus.queue_length} 人排队</span>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* 左侧 - 输入区域 */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-5">
             
             {/* 说明卡片 */}
             <div className="bg-white rounded-2xl shadow-ios overflow-hidden">
@@ -536,7 +507,7 @@ const WorkspacePage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {
   ArrowLeft, Download, FileText, GitCompare,
-  CheckCircle, AlertCircle, Shield, Square
+  CheckCircle, AlertCircle, Shield, Square, Sparkles
 } from 'lucide-react';
 import { optimizationAPI } from '../api';
+import AppLayout from '../components/AppLayout';
 
 const SessionDetailPage = () => {
   const { sessionId } = useParams();
@@ -196,91 +197,69 @@ const SessionDetailPage = () => {
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">加载中...</p>
+      <AppLayout pageTitle="会话详情" pageIcon={Sparkles}>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-500 text-sm">加载中...</p>
+          </div>
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-ios-background">
-      {/* 顶部导航 - iOS Glass Style */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-ios-separator sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-[52px]">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate('/workspace')}
-                className="flex items-center gap-1 text-ios-blue hover:opacity-70 transition-opacity -ml-2 px-2 py-1 rounded-lg"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-[17px] font-normal">返回</span>
-              </button>
-              
-              <div className="h-6 w-[1px] bg-gray-300 mx-1" />
-
-              <div className="flex items-center gap-2">
-                <h1 className="text-[17px] font-semibold text-black">
-                  会话详情
-                </h1>
-                <span className="text-[13px] text-ios-gray font-normal">
-                  {new Date(session.created_at).toLocaleDateString()}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {session.status === 'completed' && (
-                <>
-                  <div className="hidden sm:flex items-center gap-1.5 text-ios-green bg-green-50 px-2 py-1 rounded-md">
-                    <CheckCircle className="w-4 h-4" />
-                    <span className="text-[13px] font-medium">已完成</span>
-                  </div>
-                  
-                  <button
-                    onClick={() => setShowExportModal(true)}
-                    className="flex items-center gap-1.5 bg-ios-blue hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded-full transition-all active:scale-[0.98] text-[15px]"
-                  >
-                    <Download className="w-4 h-4" />
-                    导出
-                  </button>
-                </>
-              )}
-              
-              {session.status === 'failed' && (
-                <div className="flex items-center gap-1.5 text-ios-red bg-red-50 px-2 py-1 rounded-md">
-                  <AlertCircle className="w-4 h-4" />
-                  <span className="text-[13px] font-medium">处理失败</span>
-                </div>
-              )}
-
-              {session.status === 'stopped' && (
-                <div className="flex items-center gap-1.5 text-orange-600 bg-orange-50 px-2 py-1 rounded-md">
-                  <AlertCircle className="w-4 h-4" />
-                  <span className="text-[13px] font-medium">已停止</span>
-                </div>
-              )}
-
-              {(session.status === 'processing' || session.status === 'queued') && (
-                <button
-                  onClick={handleStop}
-                  className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 font-semibold py-1.5 px-4 rounded-full transition-all active:scale-[0.98] text-[15px]"
-                >
-                  <Square className="w-4 h-4 fill-current" />
-                  停止
-                </button>
-              )}
-            </div>
+  const sessionHeaderActions = (
+    <>
+      <span className="text-[12px] text-ios-gray hidden sm:block">
+        {new Date(session.created_at).toLocaleDateString()}
+      </span>
+      {session.status === 'completed' && (
+        <>
+          <div className="hidden sm:flex items-center gap-1.5 text-ios-green bg-green-50 px-2 py-1 rounded-lg border border-green-100">
+            <CheckCircle className="w-3.5 h-3.5" />
+            <span className="text-[12px] font-medium">已完成</span>
           </div>
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center gap-1.5 bg-ios-blue hover:bg-blue-600 text-white font-semibold py-1.5 px-3 rounded-lg transition-all active:scale-[0.98] text-[13px]"
+          >
+            <Download className="w-3.5 h-3.5" />
+            导出
+          </button>
+        </>
+      )}
+      {session.status === 'failed' && (
+        <div className="flex items-center gap-1.5 text-ios-red bg-red-50 px-2 py-1 rounded-lg border border-red-100">
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span className="text-[12px] font-medium">处理失败</span>
         </div>
-      </nav>
+      )}
+      {session.status === 'stopped' && (
+        <div className="flex items-center gap-1.5 text-orange-600 bg-orange-50 px-2 py-1 rounded-lg border border-orange-100">
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span className="text-[12px] font-medium">已停止</span>
+        </div>
+      )}
+      {(session.status === 'processing' || session.status === 'queued') && (
+        <button
+          onClick={handleStop}
+          className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 font-semibold py-1.5 px-3 rounded-lg transition-all active:scale-[0.98] text-[13px] border border-red-100"
+        >
+          <Square className="w-3.5 h-3.5 fill-current" />
+          停止
+        </button>
+      )}
+    </>
+  );
 
-      {/* 主内容 */}
+  return (
+    <AppLayout
+      pageTitle="会话详情"
+      pageIcon={Sparkles}
+      pageDescription={`创建于 ${new Date(session.created_at).toLocaleDateString()}`}
+      headerActions={sessionHeaderActions}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        
         {/* iOS Segmented Control */}
         <div className="flex justify-center mb-6">
           <div className="bg-gray-200/80 p-1 rounded-xl inline-flex w-full max-w-md">
@@ -504,7 +483,7 @@ const SessionDetailPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </AppLayout>
   );
 };
 

@@ -4,9 +4,10 @@ import toast from 'react-hot-toast';
 import {
   ArrowLeft, Sparkles, Save, Download, Trash2, Edit3,
   Loader2, CheckCircle, AlertCircle, FileText, List,
-  Code, Eye, Settings, Copy
+  Code, Eye, Settings, Copy, BookOpen
 } from 'lucide-react';
 import { wordFormatterAPI } from '../api';
+import AppLayout from '../components/AppLayout';
 
 // Preset templates for common document types
 const PRESET_TEMPLATES = [
@@ -309,37 +310,13 @@ const SpecGeneratorPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              to="/word-formatter"
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
-            <div>
-              <h1 className="text-lg font-semibold text-gray-900">AI 排版规范生成器</h1>
-              <p className="text-sm text-gray-500">根据您的要求生成自定义排版规范</p>
-            </div>
-          </div>
-
-          {usage && (
-            <div className="text-sm text-gray-500">
-              使用量: {usage.usage_count}/{usage.usage_limit > 0 ? usage.usage_limit : '∞'}
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto p-4">
+    <AppLayout pageTitle="排版规范生成器" pageIcon={BookOpen} pageDescription="根据您的要求生成自定义排版规范">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Panel - Input */}
           <div className="space-y-4">
             {/* Preset Templates */}
-            <div className="bg-white rounded-xl shadow-sm p-4">
+            <div className="bg-white rounded-xl shadow-ios p-4">
               <h3 className="font-medium text-gray-900 mb-3">常用模板</h3>
               <div className="grid grid-cols-1 gap-2">
                 {PRESET_TEMPLATES.map((template) => (
@@ -608,7 +585,7 @@ const SpecGeneratorPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

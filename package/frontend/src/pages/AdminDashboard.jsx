@@ -301,44 +301,44 @@ const AdminDashboard = () => {
   // Login Page
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 animate-fade-in-up">
-          <div className="flex items-center justify-center mb-8">
-            <div className="bg-blue-600 p-3 rounded-full">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 w-full max-w-md p-8 animate-fade-in-up">
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-[20px] flex items-center justify-center shadow-lg mb-4">
               <Shield className="w-8 h-8 text-white" />
             </div>
+            <h1 className="text-2xl font-bold text-black tracking-tight">
+              管理后台
+            </h1>
+            <p className="text-sm text-ios-gray mt-1">
+              请使用管理员账号登录
+            </p>
           </div>
-          <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">
-            管理后台
-          </h1>
-          <p className="text-center text-gray-600 mb-8">
-            请使用管理员账号登录
-          </p>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="block text-sm font-medium text-ios-gray ml-1">
                 用户名
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3.5 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-200/50 focus:bg-white/70 focus:ring-2 focus:ring-ios-blue/30 focus:border-ios-blue/50 transition-all text-black placeholder-gray-400 outline-none text-[17px]"
                 placeholder="请输入用户名"
                 required
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="space-y-1.5">
+              <label className="block text-sm font-medium text-ios-gray ml-1">
                 密码
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3.5 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-200/50 focus:bg-white/70 focus:ring-2 focus:ring-ios-blue/30 focus:border-ios-blue/50 transition-all text-black placeholder-gray-400 outline-none text-[17px]"
                 placeholder="请输入密码"
                 required
               />
@@ -347,11 +347,11 @@ const AdminDashboard = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-ios-blue hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3.5 px-6 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 text-[17px] shadow-lg hover:shadow-xl mt-2"
             >
               {loading ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   登录中...
                 </>
               ) : (
@@ -366,7 +366,7 @@ const AdminDashboard = () => {
           <div className="mt-6 text-center">
             <button
               onClick={() => navigate('/')}
-              className="text-blue-600 hover:text-blue-700 text-sm"
+              className="text-ios-blue hover:opacity-70 text-sm font-medium transition-opacity"
             >
               返回首页
             </button>
@@ -378,102 +378,54 @@ const AdminDashboard = () => {
 
   // Admin Dashboard
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-ios-background">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Shield className="w-8 h-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-800">管理后台</h1>
+      <div className="bg-white/80 backdrop-blur-xl border-b border-gray-200/80 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[52px] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-[10px] flex items-center justify-center shadow-sm">
+              <Shield className="w-[18px] h-[18px] text-white" />
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
-              <LogOut className="w-5 h-5" />
-              退出登录
-            </button>
+            <h1 className="text-[17px] font-semibold text-black tracking-tight">管理后台</h1>
           </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-ios-red hover:bg-red-50 rounded-lg transition-colors text-[15px] font-medium"
+          >
+            <LogOut className="w-4 h-4" />
+            退出
+          </button>
         </div>
       </div>
 
-      {/* Tabs Navigation - Enhanced Design */}
-      <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 border-b border-gray-200 shadow-sm">
+      {/* Tabs Navigation - iOS style */}
+      <div className="bg-white/80 backdrop-blur-xl border-b border-gray-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-2 overflow-x-auto py-3">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`group relative flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out ${
-                activeTab === 'dashboard'
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30 scale-105'
-                  : 'bg-white text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md border border-gray-200'
-              }`}
-            >
-              <BarChart3 className={`w-5 h-5 transition-transform duration-300 ${
-                activeTab === 'dashboard' ? 'scale-110' : 'group-hover:scale-110'
-              }`} />
-              <span className="whitespace-nowrap">数据面板</span>
-              {activeTab === 'dashboard' && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-white rounded-full"></div>
-              )}
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('sessions')}
-              className={`group relative flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out ${
-                activeTab === 'sessions'
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30 scale-105'
-                  : 'bg-white text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md border border-gray-200'
-              }`}
-            >
-              <Activity className={`w-5 h-5 transition-transform duration-300 ${
-                activeTab === 'sessions' ? 'scale-110' : 'group-hover:scale-110'
-              }`} />
-              <span className="whitespace-nowrap">会话监控</span>
-              {activeTab === 'sessions' && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-white rounded-full"></div>
-              )}
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('database')}
-              className={`group relative flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out ${
-                activeTab === 'database'
-                  ? 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-105'
-                  : 'bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 hover:shadow-md border border-gray-200'
-              }`}
-            >
-              <Database className={`w-5 h-5 transition-transform duration-300 ${
-                activeTab === 'database' ? 'scale-110' : 'group-hover:scale-110'
-              }`} />
-              <span className="whitespace-nowrap">数据库管理</span>
-              {activeTab === 'database' && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-white rounded-full"></div>
-              )}
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('config')}
-              className={`group relative flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out ${
-                activeTab === 'config'
-                  ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105'
-                  : 'bg-white text-gray-600 hover:text-amber-600 hover:bg-amber-50 hover:shadow-md border border-gray-200'
-              }`}
-            >
-              <Settings className={`w-5 h-5 transition-transform duration-300 ${
-                activeTab === 'config' ? 'scale-110' : 'group-hover:scale-110'
-              }`} />
-              <span className="whitespace-nowrap">系统配置</span>
-              {activeTab === 'config' && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-white rounded-full"></div>
-              )}
-            </button>
+          <div className="flex space-x-1 overflow-x-auto py-2 scrollbar-none">
+            {[
+              { id: 'dashboard', label: '数据面板', icon: BarChart3 },
+              { id: 'sessions', label: '会话监控', icon: Activity },
+              { id: 'database', label: '数据库管理', icon: Database },
+              { id: 'config', label: '系统配置', icon: Settings },
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-medium whitespace-nowrap transition-all duration-200 border ${
+                  activeTab === id
+                    ? 'bg-blue-50 text-blue-600 border-blue-200 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 border-transparent'
+                }`}
+              >
+                <Icon className="w-4 h-4 flex-shrink-0" />
+                {label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Tab Content */}
         {activeTab === 'dashboard' && (
           <>
@@ -555,7 +507,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                {/* 第二行：处理统计 - 统一使用白色背景，更专业 */}
+                {/* 第二行：处理统计 */}
                 {statistics.processing && (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {/* Total Characters Processed */}

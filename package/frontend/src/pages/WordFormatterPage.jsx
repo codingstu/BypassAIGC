@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {
-  FileText, Upload, Download, History, LogOut, Play,
+  FileText, Upload, Download, History, Play,
   CheckCircle, AlertCircle, Trash2, Info, Settings,
   Loader2, FileUp, X, ArrowLeft, ArrowRight, Sparkles,
   Edit3, Eye, BookOpen, HelpCircle, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { wordFormatterAPI } from '../api';
+import AppLayout from '../components/AppLayout';
 
 const WordFormatterPage = () => {
   const navigate = useNavigate();
@@ -310,11 +311,6 @@ const WordFormatterPage = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('cardKey');
-    navigate('/');
-  };
-
   const handleSelectSavedSpec = (spec) => {
     setCustomSpecJson(spec.spec_json);
     setSelectedSpec('_custom_');
@@ -331,56 +327,7 @@ const WordFormatterPage = () => {
   const hasWorkflowData = preprocessedText || passedSpecJson;
 
   return (
-    <div className="min-h-screen bg-ios-background">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-ios-separator sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-[52px]">
-            <div className="flex items-center gap-2">
-              {hasWorkflowData && (
-                <Link
-                  to="/format-checker"
-                  className="flex items-center gap-1 text-gray-600 hover:text-gray-900 mr-2"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span className="text-sm">返回格式检测</span>
-                </Link>
-              )}
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-[17px] font-semibold text-black tracking-tight">
-                AI Word 精确排版
-              </h1>
-            </div>
-
-            <div className="flex items-center gap-4">
-              {usage && (
-                <div className="text-[13px] text-ios-gray">
-                  已使用: <span className="font-medium text-black">{usage.usage_count}</span>
-                  {usage.usage_limit > 0 && ` / ${usage.usage_limit}`}
-                </div>
-              )}
-
-              <Link
-                to="/workspace"
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-[13px] font-medium text-gray-700 transition-colors"
-              >
-                <FileText className="w-4 h-4" />
-                <span className="hidden sm:inline">论文润色</span>
-              </Link>
-
-              <button
-                onClick={handleLogout}
-                className="text-ios-red text-[17px] hover:opacity-70 transition-opacity font-normal"
-              >
-                退出
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <AppLayout pageTitle="Word 精确排版" pageIcon={FileText} pageDescription="一键生成标准 Word 文档">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Workflow Indicator */}
         {hasWorkflowData && (
@@ -1008,7 +955,7 @@ Deep Learning; Image Recognition; Convolutional Neural Network
           </div>
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 
